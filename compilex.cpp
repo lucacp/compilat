@@ -8,7 +8,7 @@
 
 using namespace std;
 
-struct token{
+typedef struct token{
     int id;
     char *name;
     char tipo;
@@ -26,12 +26,15 @@ int adicionaToken(struct token *lista,char *buf,int tamanho);
 
 int verificarToken(char *buf,int tamanho);
 
+void gravarTokens(struct token **lista,FILE *arq);
+
 int main()
 { /*  txt com alterações  */
     FILE *arq=NULL;
     FILE *said=NULL;
-    struct token **lista=NULL;
+    Token **lista=NULL;
     cout << "Digite nome do arquivo para leitura: "<< endl;
+    lista=(**Token)malloc(sizeof(*struct token));
     char arquivo[MAXTARQ];
     char um,buf[MAXTA],buf2[MAXTA];
     int bufLinha=0,estado=0;
@@ -50,14 +53,14 @@ int main()
         fread(&um,sizeof(char),1,arq);
         colunaAtual++;
         if(um==' ')
-            continue;
+            estado=adicionaToken(lista[Quantidade]);
+
         else{
             buf[bufLinha]=um;
             bufLinha++;
         };
         if(bufLinha+1==MAXTA){
             estado=adicionaToken(lista[Quantidade]);
-            Quantidade++;
             if(estado!=0){
 
             }
@@ -74,6 +77,7 @@ int main()
     }while(feof(arq)==0);
     cout << "terminou"<<endl;
     */
+    gravarTokens(lista,said);
     fclose(arq);
 	fclose(said);
 	return 0;
@@ -134,8 +138,11 @@ int verificarToken(char *buf,int tamanho){
         case '<'||'>'||'!'||'='||'|'||'&':
             return 2;
             break;
-        case '['||']'||'{'||'}':
+        case '['||'{':
             return 4;
+            break;
+        case '}'||']':
+            return 5;
             break;
         case '0'||'1'||'2'||'3'||'4'||'5'||'6'||'7'||'8'||'9'||'.':
             return 3;
@@ -151,4 +158,7 @@ int verificarToken(char *buf,int tamanho){
     };
 
     return 11;
+}
+void gravarTokens(Token **lista,FILE *arq){
+
 }
