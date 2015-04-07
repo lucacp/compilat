@@ -1,0 +1,11 @@
+#include <stdio.h>
+//ola
+/*
+*final
+*/
+main(){
+	int x;
+	int y;
+	x=x+y
+
+}
