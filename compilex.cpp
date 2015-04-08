@@ -55,14 +55,9 @@ int main()
             continue;
         else{
             estadoAtual=verificarToken(buf,bufLinha);
-            if()
-            buf[bufLinha]=um;
-            bufLinha++;
-        };
-        if(bufLinha+1==MAXTA){
-            estadoAtual=verificarToken(buf,bufLinha);
-            if(estado!=0){
-
+            if(estadoAtual!=0){
+                buf[bufLinha]=um;
+                bufLinha++;
             }
         };
 
