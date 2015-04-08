@@ -51,15 +51,18 @@ int main()
         fread(&um,sizeof(char),1,arq);
         colunaAtual++;
         estadoAnter=estadoAtual;
-        if(um==' '||estadoAnter==0)
+        if(estadoAnter==0&&um!='\n')
+            continue;
+        else if(estadoAnter==1&&(um!='*'||um!='/'))
             continue;
         else{
+            buf[bufLinha]=um;
+            bufLinha++;
+
             estadoAtual=verificarToken(buf,bufLinha);
-            if(estadoAtual!=0){
-                buf[bufLinha]=um;
-                bufLinha++;
-            }
-        };
+        }
+
+
 
 
 
@@ -93,12 +96,20 @@ int verificarToken(char *buf,int tamanho){
             return 9;
             break;
         case '/'||'*'||'+'||'-'||'('||')':
-            if(tamanho==1)
-                return 1;
-            else if(um=='/'&&(buf[1]=='*'||buf[1]=='/'))
-                return 0;
+            if(um=='/'){
+                if(buf[1]=='/')
+                    return 0;
+                else if(buf[1]=='*')
+                    return 1;
+            }
+            else if(um=='*'){
+                if(buf[1]=='/')
+                    return 1;
+                else
+                    return 2;
+            }
             else
-                return 1;
+                return 2;
             break;
         case '<'||'>'||'!'||'='||'|'||'&':
             return 2;
