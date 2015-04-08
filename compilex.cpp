@@ -22,8 +22,6 @@ int colunaAtual=0;
 int linhaAnter=0;
 int colunaAnter=0;
 
-int adicionaToken(struct token *lista,char *buf,int tamanho);
-
 int verificarToken(char *buf,int tamanho);
 
 void gravarTokens(struct token **lista,FILE *arq);
@@ -34,10 +32,10 @@ int main()
     FILE *said=NULL;
     Token **lista=NULL;
     cout << "Digite nome do arquivo para leitura: "<< endl;
-    lista=(**Token)malloc(sizeof(*struct token));
+    lista=new Token[1][1];
     char arquivo[MAXTARQ];
-    char um,buf[MAXTA],buf2[MAXTA];
-    int bufLinha=0,estado=0;
+    char um,buf[MAXTA];
+    int bufLinha=0,estadoAtual=11,estadoAnter=11;
     cin.getline(arquivo,MAXTARQ-1);
     arq=fopen(arquivo,"r");
     if(!arq){
@@ -52,15 +50,17 @@ int main()
     while(feof(arq)==0){
         fread(&um,sizeof(char),1,arq);
         colunaAtual++;
-        if(um==' ')
-            estado=adicionaToken(lista[Quantidade]);
-
+        estadoAnter=estadoAtual;
+        if(um==' '||estadoAnter==0)
+            continue;
         else{
+            estadoAtual=verificarToken(buf,bufLinha);
+            if()
             buf[bufLinha]=um;
             bufLinha++;
         };
         if(bufLinha+1==MAXTA){
-            estado=adicionaToken(lista[Quantidade]);
+            estadoAtual=verificarToken(buf,bufLinha);
             if(estado!=0){
 
             }
@@ -83,36 +83,6 @@ int main()
 	return 0;
 }
 
-void adicionaToken(struct token *lista,char *buf,int tamanho){
-    Token *Taux=NULL;
-    Taux= new Token;
-    if (tamanho==0)
-        return;
-    int aux,dois,atual=0,anter=0,seq[tamanho];
-    for(aux=0;aux<tamanho;aux++){
-        anter=atual;
-        atual=seq[aux]=verificarToken(&buf[aux],tamanho);
-        switch (anter){
-        case 0:
-            if(atual==20){
-                for(dois=0;dois<MAXTA;dois++){
-                    if(dois>=MAXTA-aux)
-                        buf[dois]='\0';
-                    else
-                        buf[dois]=buf[aux+dois];
-                    seq[dois]=0;
-                };
-            }else
-                atual=0;
-            break;
-        case 9:
-            if(atual==9){
-                Taux.name=new char[]
-            }
-        }
-    }
-    lista=Taux;
-}
 int verificarToken(char *buf,int tamanho){
     char um=buf[0];
     switch (um){
