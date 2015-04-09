@@ -67,6 +67,10 @@ int main()
             continue;
         else{
             if(um==' '||um==';'||um=='\t'||um=='\n'){
+                if(um=='\n'){
+                    buf[bufLinha]=um;
+                    ++bufLinha;
+                };
                 estado=tratarBuffer(buf,bufLinha,estado);
                 for(i=0;i<bufLinha;i++){
                     buf[i]=' ';
