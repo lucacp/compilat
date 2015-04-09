@@ -132,7 +132,7 @@ int verificarToken(char *buf,int tamanho){
             else
                 return OPERADOR;
             break;
-        case '<'||'>'||'!'||'='||'|'||'&'||'+'||'-'||'('||')'||'.':
+        case '<'||'>'||'!'||'='||'|'||'&'||'+'||'-'||'('||')'||'.'||'%':
             return OPERADOR;
             break;
         case '['||'{':
@@ -144,7 +144,7 @@ int verificarToken(char *buf,int tamanho){
         case '0'||'1'||'2'||'3'||'4'||'5'||'6'||'7'||'8'||'9':
             return NUMERO;
             break;
-        case 'a'||'b'||'c'||'d'||'e'||'f'||'g'||'h'||'i'||'j'||'k'||'l'||'m'||'n'||'o'||'p'||'q'||'r'||'s'||'t'||'u'||'v'||'w'||'x'||'y'||'z'||'A'||'B'||'C'||'D'||'E'||'F'||'G'||'H'||'I'||'J'||'K'||'L'||'M'||'N'||'O'||'P'||'Q'||'R'||'S'||'T'||'U'||'V'||'W'||'X'||'Y'||'Z'||
+        case 'a'||'b'||'c'||'d'||'e'||'f'||'g'||'h'||'i'||'j'||'k'||'l'||'m'||'n'||'o'||'p'||'q'||'r'||'s'||'t'||'u'||'v'||'w'||'x'||'y'||'z'||'A'||'B'||'C'||'D'||'E'||'F'||'G'||'H'||'I'||'J'||'K'||'L'||'M'||'N'||'O'||'P'||'Q'||'R'||'S'||'T'||'U'||'V'||'W'||'X'||'Y'||'Z':
             return CARACTER;
             break;
         default:{
@@ -164,44 +164,58 @@ int tratarBuffer(char *buf,int tamanho,int estado){
     * se primeiro char é # ignora tudo até '\n'
     * se primeiro char é / e segundo char é / mesma coisa
     * se o segundo char for * então até não aparecer um * e / ignora tudo.
+    *                        OK
     * **********************************************************************
-    * para os tokens primeiro são os numeros, apos as palavras reservadas e identificadores,
-    * se mesmo assim não for então é tratado como token.
+    *
+    * para os tratar primeiro são os numeros,
+    *
+    * apos as palavras reservadas
+    *
+    * identificadores (variaveis)
+    *
+    * e se mesmo assim não for então é tratado como token.
     *
     *
     *
     */
     int i;
     for(i=0;i<tamanho;i++){
-        if(estado==LINECOMMENT)
+        if(estado==LINECOMMENT){
             if(buf[i]=='\n'){
                 estado=ENDLINECOMMENT;
                 linhaAtual++;
                 colunaAtual=0;
             };
-        else if(buf[i]=='#')
+        }
+        else if(buf[i]=='#'){
             estado=LINECOMMENT;
+        }
         else if(i+1<tamanho){
             if(estado!=BLOCKCOMMENT){
                 if(buf[i]=='/'){
-                    if(buf[i+1]=='/')
+                    if(buf[i+1]=='/'){
                         estado=LINECOMMENT;
-                    else if(buf[i+1]=='*')
+                    }
+                    else if(buf[i+1]=='*'){
                         estado=BLOCKCOMMENT;
+                    }
                     else{
                         ///aqui cai quando é: / e mais alguma coisa.
+                        estado=verificarToken(buf,tamanho);
                     }
                 }
                 else{
-
+                    ///aqui cai todos as outras possibilidades.
+                    estado = verificarToken( buf, tamanho);
                 }
             }
             else{
                 if(buf[i]=='*'){
-                    if(buf[i+1]=='/')
+                    if(buf[i+1]=='/'){
                         estado=ENDBLOCKCOMMENT;
-                };
-            };
+                    }
+                }
+            }
         }
     }
 }
