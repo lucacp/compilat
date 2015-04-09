@@ -10,6 +10,10 @@
 #define ENDLINECOMMENT 20
 #define ENDBLOCKCOMMENT 19
 #define STARTENDSTR 9
+#define NORMAL 11
+#define NUMERO 3
+#define CARACTER 8
+#define OPERADOR 2
 
 using namespace std;
 
@@ -30,7 +34,9 @@ int colunaAnter=0;
 int verificarToken(char *buf,int tamanho);
 
 void gravarTokens(struct token **lista,FILE *arq);
+
 int tratarBuffer(char *buf,int tamanho,int estado);
+
 int main()
 { /*  txt com alterações  */
     FILE *arq=NULL;
@@ -40,7 +46,7 @@ int main()
     lista=new Token[1][1];
     char arquivo[MAXTARQ];
     char um,buf[MAXTA];
-    int bufLinha=0,estado=11;
+    int bufLinha=0,estado=NORMAL,i=0;
     cin.getline(arquivo,MAXTARQ-1);
     arq=fopen(arquivo,"r");
     if(!arq){
@@ -60,8 +66,11 @@ int main()
         else if(estado==BLOCKCOMMENT&&(um!='/'&&um!='*'))
             continue;
         else{
-            if(um==' '||um==';'||um=='\t'){
+            if(um==' '||um==';'||um=='\t'||um=='\n'){
                 estado=tratarBuffer(buf,bufLinha,estado);
+                for(i=0;i<bufLinha;i++){
+                    buf[i]=' ';
+                }
                 bufLinha=0;
             }
             else{
@@ -114,13 +123,13 @@ int verificarToken(char *buf,int tamanho){
                 if(buf[1]=='/')
                     return ENDBLOCKCOMMENT;
                 else
-                    return 2;
+                    return OPERADOR;
             }
             else
-                return 2;
+                return OPERADOR;
             break;
-        case '<'||'>'||'!'||'='||'|'||'&'||'+'||'-'||'('||')':
-            return 2;
+        case '<'||'>'||'!'||'='||'|'||'&'||'+'||'-'||'('||')'||'.':
+            return OPERADOR;
             break;
         case '['||'{':
             return 4;
@@ -128,14 +137,14 @@ int verificarToken(char *buf,int tamanho){
         case '}'||']':
             return 5;
             break;
-        case '0'||'1'||'2'||'3'||'4'||'5'||'6'||'7'||'8'||'9'||'.':
-            return 3;
+        case '0'||'1'||'2'||'3'||'4'||'5'||'6'||'7'||'8'||'9':
+            return NUMERO;
             break;
         case 'a'||'b'||'c'||'d'||'e'||'f'||'g'||'h'||'i'||'j'||'k'||'l'||'m'||'n'||'o'||'p'||'q'||'r'||'s'||'t'||'u'||'v'||'w'||'x'||'y'||'z'||'A'||'B'||'C'||'D'||'E'||'F'||'G'||'H'||'I'||'J'||'K'||'L'||'M'||'N'||'O'||'P'||'Q'||'R'||'S'||'T'||'U'||'V'||'W'||'X'||'Y'||'Z'||
-            return 8;
+            return CARACTER;
             break;
         default:{
-            return 11;
+            return NORMAL;
             break;
         }
         break;
@@ -163,6 +172,8 @@ int tratarBuffer(char *buf,int tamanho,int estado){
         if(estado==LINECOMMENT)
             if(buf[i]=='\n'){
                 estado=ENDLINECOMMENT;
+                linhaAtual++;
+                colunaAtual=0;
             };
         else if(buf[i]=='#')
             estado=LINECOMMENT;
@@ -173,6 +184,12 @@ int tratarBuffer(char *buf,int tamanho,int estado){
                         estado=LINECOMMENT;
                     else if(buf[i+1]=='*')
                         estado=BLOCKCOMMENT;
+                    else{
+                        ///aqui cai quando é: / e mais alguma coisa.
+                    }
+                }
+                else{
+
                 }
             }
             else{
