@@ -30,7 +30,7 @@ int colunaAnter=0;
 int verificarToken(char *buf,int tamanho);
 
 void gravarTokens(struct token **lista,FILE *arq);
-int tratarBuffer(char *buf,int *tamanho)
+int tratarBuffer(char *buf,int tamanho,int estado);
 int main()
 { /*  txt com alterações  */
     FILE *arq=NULL;
@@ -57,16 +57,17 @@ int main()
         colunaAtual++;
         if(estado==LINECOMMENT&&um!='\n')
             continue;
-        else if(estado==BLOCKCOMMENT&&um!='/')
+        else if(estado==BLOCKCOMMENT&&(um!='/'&&um!='*'))
             continue;
         else{
-            if(um==' '||um==';'||um=='\t')
-                estado=tratarBuffer(buf,&bufLinha);//ter de usar função diferente!!!!
+            if(um==' '||um==';'||um=='\t'){
+                estado=tratarBuffer(buf,bufLinha,estado);
+                bufLinha=0;
+            }
             else{
                 buf[bufLinha]=um;
                 bufLinha++;
-            }
-
+            };
         }
 
 
@@ -82,7 +83,7 @@ int main()
     }while(feof(arq)==0);
     cout << "terminou"<<endl;
     */
-    gravarTokens(lista,said);
+    //gravarTokens(lista,said);
     fclose(arq);
 	fclose(said);
 	return 0;
@@ -102,7 +103,7 @@ int verificarToken(char *buf,int tamanho){
         case '"':
             return STARTENDSTR;
             break;
-        case '/'||'*'||'+'||'-'||'('||')':
+        case '/'||'*':
             if(um=='/'){
                 if(buf[1]=='/')
                     return LINECOMMENT;
@@ -118,7 +119,7 @@ int verificarToken(char *buf,int tamanho){
             else
                 return 2;
             break;
-        case '<'||'>'||'!'||'='||'|'||'&':
+        case '<'||'>'||'!'||'='||'|'||'&'||'+'||'-'||'('||')':
             return 2;
             break;
         case '['||'{':
@@ -145,7 +146,7 @@ int verificarToken(char *buf,int tamanho){
 void gravarTokens(Token **lista,FILE *arq){
 
 }
-int tratarBuffer(char *buf,int *tamanho){
+int tratarBuffer(char *buf,int tamanho,int estado){
     /**
     * se primeiro char é # ignora tudo até '\n'
     * se primeiro char é / e segundo char é / mesma coisa
@@ -157,4 +158,29 @@ int tratarBuffer(char *buf,int *tamanho){
     *
     *
     */
+    int i;
+    for(i=0;i<tamanho;i++){
+        if(estado==LINECOMMENT)
+            if(buf[i]=='\n'){
+                estado=ENDLINECOMMENT;
+            };
+        else if(buf[i]=='#')
+            estado=LINECOMMENT;
+        else if(i+1<tamanho){
+            if(estado!=BLOCKCOMMENT){
+                if(buf[i]=='/'){
+                    if(buf[i+1]=='/')
+                        estado=LINECOMMENT;
+                    else if(buf[i+1]=='*')
+                        estado=BLOCKCOMMENT;
+                }
+            }
+            else{
+                if(buf[i]=='*'){
+                    if(buf[i+1]=='/')
+                        estado=ENDBLOCKCOMMENT;
+                };
+            };
+        }
+    }
 }
