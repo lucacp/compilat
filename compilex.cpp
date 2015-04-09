@@ -5,6 +5,11 @@
 #include <cstring>
 #define MAXTARQ 20
 #define MAXTA 50
+#define LINECOMMENT 0
+#define BLOCKCOMMENT 1
+#define ENDLINECOMMENT 20
+#define ENDBLOCKCOMMENT 19
+#define STARTENDSTR 9
 
 using namespace std;
 
@@ -25,7 +30,7 @@ int colunaAnter=0;
 int verificarToken(char *buf,int tamanho);
 
 void gravarTokens(struct token **lista,FILE *arq);
-
+int tratarBuffer(char *buf,int *tamanho)
 int main()
 { /*  txt com alterações  */
     FILE *arq=NULL;
@@ -35,7 +40,7 @@ int main()
     lista=new Token[1][1];
     char arquivo[MAXTARQ];
     char um,buf[MAXTA];
-    int bufLinha=0,estadoAtual=11,estadoAnter=11;
+    int bufLinha=0,estado=11;
     cin.getline(arquivo,MAXTARQ-1);
     arq=fopen(arquivo,"r");
     if(!arq){
@@ -50,16 +55,18 @@ int main()
     while(feof(arq)==0){
         fread(&um,sizeof(char),1,arq);
         colunaAtual++;
-        estadoAnter=estadoAtual;
-        if(estadoAnter==0&&um!='\n')
+        if(estado==LINECOMMENT&&um!='\n')
             continue;
-        else if(estadoAnter==1&&(um!='*'||um!='/'))
+        else if(estado==BLOCKCOMMENT&&um!='/')
             continue;
         else{
-            buf[bufLinha]=um;
-            bufLinha++;
+            if(um==' '||um==';'||um=='\t')
+                estado=tratarBuffer(buf,&bufLinha);//ter de usar função diferente!!!!
+            else{
+                buf[bufLinha]=um;
+                bufLinha++;
+            }
 
-            estadoAtual=verificarToken(buf,bufLinha);
         }
 
 
@@ -85,26 +92,26 @@ int verificarToken(char *buf,int tamanho){
     char um=buf[0];
     switch (um){
         case '#':
-            return 0;
+            return LINECOMMENT;
             break;
         case '\n':
             linhaAtual++;
             colunaAtual=0;
-            return 20;
+            return ENDLINECOMMENT;
             break;
         case '"':
-            return 9;
+            return STARTENDSTR;
             break;
         case '/'||'*'||'+'||'-'||'('||')':
             if(um=='/'){
                 if(buf[1]=='/')
-                    return 0;
+                    return LINECOMMENT;
                 else if(buf[1]=='*')
-                    return 1;
+                    return BLOCKCOMMENT;
             }
             else if(um=='*'){
                 if(buf[1]=='/')
-                    return 1;
+                    return ENDBLOCKCOMMENT;
                 else
                     return 2;
             }
@@ -137,4 +144,16 @@ int verificarToken(char *buf,int tamanho){
 }
 void gravarTokens(Token **lista,FILE *arq){
 
+}
+int tratarBuffer(char *buf,int *tamanho){
+    /**
+    * se primeiro char é # ignora tudo até '\n'
+    * se primeiro char é / e segundo char é / mesma coisa
+    * se o segundo char for * então até não aparecer um * e / ignora tudo.
+    *
+    *
+    *
+    *
+    *
+    */
 }
