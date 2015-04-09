@@ -150,8 +150,9 @@ int tratarBuffer(char *buf,int *tamanho){
     * se primeiro char é # ignora tudo até '\n'
     * se primeiro char é / e segundo char é / mesma coisa
     * se o segundo char for * então até não aparecer um * e / ignora tudo.
-    *
-    *
+    * **********************************************************************
+    * para os tokens primeiro são os numeros, apos as palavras reservadas e identificadores,
+    * se mesmo assim não for então é tratado como token.
     *
     *
     *
