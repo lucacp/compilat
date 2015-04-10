@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <malloc.h>
 #define MAXTARQ 20
 #define MAXTA 50
 #define LINECOMMENT 0
@@ -17,13 +18,19 @@
 
 using namespace std;
 
-typedef struct token{
+class Token{
     int id;
     char *name;
     char tipo;
     int linha;
     int coluna;
-}Token;
+    Token *prox;
+    public:
+        Token(){
+            name=new char[2];
+            prox=NULL;
+        };
+};
 
 int Quantidade=0;
 int linhaAtual=0;
@@ -33,7 +40,7 @@ int colunaAnter=0;
 
 int verificarToken(char *buf,int tamanho);
 
-void gravarTokens(struct token **lista,FILE *arq);
+void gravarTokens(class Token *lista,FILE *arq);
 
 int tratarBuffer(char *buf,int tamanho,int estado);
 
@@ -41,9 +48,8 @@ int main()
 { /*  txt com alterações  */
     FILE *arq=NULL;
     FILE *said=NULL;
-    Token **lista=NULL;
+    Token *lista=new Token();
     cout << "Digite nome do arquivo para leitura: "<< endl;
-    lista=new Token[1][1];
     char arquivo[MAXTARQ];
     char um,buf[MAXTA];
     int bufLinha=0,estado=NORMAL,i=0;
@@ -116,35 +122,66 @@ int verificarToken(char *buf,int tamanho){
         case '"':
             return STARTENDSTR;
             break;
-        case '/'||'*':
-            if(um=='/'){
-                if(buf[1]=='/')
-                    return LINECOMMENT;
-                else if(buf[1]=='*')
-                    return BLOCKCOMMENT;
+        case '/':
+            if(buf[1]=='/'){
+                return LINECOMMENT;
             }
-            else if(um=='*'){
-                if(buf[1]=='/')
-                    return ENDBLOCKCOMMENT;
-                else
-                    return OPERADOR;
+            else if(buf[1]=='*'){
+                return BLOCKCOMMENT;
             }
-            else
+            else{
                 return OPERADOR;
+            };
             break;
-        case '<'||'>'||'!'||'='||'|'||'&'||'+'||'-'||'('||')'||'.'||'%':
+        case '*':
+            if(buf[1]=='/'){
+                return ENDBLOCKCOMMENT;
+            }
+            else{
+                return OPERADOR;
+            }
+            break;
+        case '+':
+        case '-':
+        case '(':
+        case ')':
+        case '.':
+        case '%':
+        case '[':
+        case '{':
+        case '}':
+        case ']':
+        case '<':
+        case '>':
+        case '!':
+        case '=':
+        case '|':
+        case '&':
             return OPERADOR;
             break;
-        case '['||'{':
-            return 4;
-            break;
-        case '}'||']':
-            return 5;
-            break;
-        case '0'||'1'||'2'||'3'||'4'||'5'||'6'||'7'||'8'||'9':
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
             return NUMERO;
             break;
-        case 'a'||'b'||'c'||'d'||'e'||'f'||'g'||'h'||'i'||'j'||'k'||'l'||'m'||'n'||'o'||'p'||'q'||'r'||'s'||'t'||'u'||'v'||'w'||'x'||'y'||'z'||'A'||'B'||'C'||'D'||'E'||'F'||'G'||'H'||'I'||'J'||'K'||'L'||'M'||'N'||'O'||'P'||'Q'||'R'||'S'||'T'||'U'||'V'||'W'||'X'||'Y'||'Z':
+        case 'a': case 'b': case 'c': case 'd': case 'e':
+        case 'f': case 'g': case 'h': case 'i': case 'j':
+        case 'k': case 'l': case 'm': case 'n': case 'o':
+        case 'p': case 'q': case 'r': case 's': case 't':
+        case 'u': case 'v': case 'w': case 'x': case 'y':
+        case 'z': case 'A': case 'B': case 'C': case 'D':
+        case 'E': case 'F': case 'G': case 'H': case 'I':
+        case 'J': case 'K': case 'L': case 'M': case 'N':
+        case 'O': case 'P': case 'Q': case 'R': case 'S':
+        case 'T': case 'U': case 'V': case 'W': case 'X':
+        case 'Y': case 'Z':
             return CARACTER;
             break;
         default:{
@@ -156,7 +193,7 @@ int verificarToken(char *buf,int tamanho){
 
     return 11;
 }
-void gravarTokens(Token **lista,FILE *arq){
+void gravarTokens(Token *lista,FILE *arq){
 
 }
 int tratarBuffer(char *buf,int tamanho,int estado){
@@ -218,4 +255,5 @@ int tratarBuffer(char *buf,int tamanho,int estado){
             }
         }
     }
+    return NORMAL;
 }
