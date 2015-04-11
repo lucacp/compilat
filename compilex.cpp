@@ -12,25 +12,50 @@
 #define ENDBLOCKCOMMENT 19
 #define STARTENDSTR 9
 #define NORMAL 11
-#define NUMERO 3
 #define CARACTER 8
 #define OPERADOR 2
+#define NUM 256
+#define ID 257
+#define TRUE 258
+#define FALSE 259
+
 
 using namespace std;
 
 class Token{
-    int id;
-    char *name;
-    char tipo;
-    int linha;
-    int coluna;
-    Token *prox;
     public:
-        Token(){
-            name=new char[2];
-            prox=NULL;
+
+    final int tag;
+
+    Token(int v){
+        tag=v;
+    };
+};
+class Num extends Token{
+    public:
+        final int value;
+        Num(int v){
+            super(NUM);
+            value=v;
         };
 };
+class Word extends Token{
+    public:
+        final string lexeme;
+        Word(int v,string s){
+            super(v);
+            lexeme=new string(s);
+        };
+
+};
+class Lexer{
+    private:
+        char peek = ' ';
+        Hashtable words = new Hashtable();
+    public:
+        int line=1;
+};
+
 
 int Quantidade=0;
 int linhaAtual=0;
@@ -169,7 +194,7 @@ int verificarToken(char *buf,int tamanho){
         case '7':
         case '8':
         case '9':
-            return NUMERO;
+            return NUM;
             break;
         case 'a': case 'b': case 'c': case 'd': case 'e':
         case 'f': case 'g': case 'h': case 'i': case 'j':
@@ -193,8 +218,8 @@ int verificarToken(char *buf,int tamanho){
 
     return 11;
 }
-void gravarTokens(Token *lista,FILE *arq){
-
+void gravarTokens(class Token *lista,FILE *arq){
+    ///objetivo nessa função é gravar o token que foi criado no tratarBuffer.
 }
 int tratarBuffer(char *buf,int tamanho,int estado){
     /**
@@ -238,12 +263,12 @@ int tratarBuffer(char *buf,int tamanho,int estado){
                     }
                     else{
                         ///aqui cai quando é: / e mais alguma coisa.
-                        estado=verificarToken(buf,tamanho);
+                        estado=verificarToken(&buf[i],tamanho-i);
                     }
                 }
                 else{
                     ///aqui cai todos as outras possibilidades.
-                    estado = verificarToken( buf, tamanho);
+                    estado = verificarToken(&buf[i],tamanho-i);
                 }
             }
             else{
@@ -255,5 +280,5 @@ int tratarBuffer(char *buf,int tamanho,int estado){
             }
         }
     }
-    return NORMAL;
+    return estado;
 }
