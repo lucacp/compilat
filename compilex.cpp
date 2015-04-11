@@ -23,37 +23,15 @@
 using namespace std;
 
 class Token{
-    public:
+    int id;
+    char *name;
+    int linha;
+    int coluna;
+    class Token *next;
 
-    final int tag;
-
-    Token(int v){
-        tag=v;
-    };
-};
-class Num extends Token{
-    public:
-        final int value;
-        Num(int v){
-            super(NUM);
-            value=v;
-        };
-};
-class Word extends Token{
-    public:
-        final string lexeme;
-        Word(int v,string s){
-            super(v);
-            lexeme=new string(s);
-        };
-
-};
-class Lexer{
-    private:
-        char peek = ' ';
-        Hashtable words = new Hashtable();
-    public:
-        int line=1;
+    Token(){
+        next=NULL;
+    }
 };
 
 
@@ -67,7 +45,7 @@ int verificarToken(char *buf,int tamanho);
 
 void gravarTokens(class Token *lista,FILE *arq);
 
-int tratarBuffer(char *buf,int tamanho,int estado);
+int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista);
 
 int main()
 { /*  txt com alterações  */
@@ -102,7 +80,7 @@ int main()
                     buf[bufLinha]=um;
                     ++bufLinha;
                 };
-                estado=tratarBuffer(buf,bufLinha,estado);
+                estado=tratarBuffer(buf,bufLinha,estado,lista);
                 for(i=0;i<bufLinha;i++){
                     buf[i]=' ';
                 }
@@ -221,7 +199,7 @@ int verificarToken(char *buf,int tamanho){
 void gravarTokens(class Token *lista,FILE *arq){
     ///objetivo nessa função é gravar o token que foi criado no tratarBuffer.
 }
-int tratarBuffer(char *buf,int tamanho,int estado){
+int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista){
     /**
     * se primeiro char é # ignora tudo até '\n'
     * se primeiro char é / e segundo char é / mesma coisa
