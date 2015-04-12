@@ -6,7 +6,7 @@
 #include <malloc.h>
 #include <string>
 #define MAXTARQ 20
-#define MAXTA 50
+#define MAXTA 20
 #define LINECOMMENT 10
 #define BLOCKCOMMENT 9
 #define ENDLINECOMMENT 20
@@ -52,26 +52,25 @@ class Token{
 };
 
 
-int linhaAtual=0;
+int linhaAtual;
 int colunaAtual=0;
-int linhaAnter=0;
+int linhaAnter=1;
 int colunaAnter=0;
 
 int verificarToken(char *buf,int tamanho);
 
-void gravarTokens(class Token *lista,char *buf,int estado);
+void gravarTokens(char *buf,int estado);
 
-int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista);
+int tratarBuffer(char *buf,int tamanho,int estado);
 
 int main()
 { /*  txt com alterações  */
     FILE *arq=NULL;
-    Token *lista=new Token();
     cout << "Digite nome do arquivo para leitura: "<< endl;
     char arquivo[MAXTARQ];
     char um,*buf;
     buf=new char[MAXTA];
-    int bufLinha=0,estado=NORMAL,i=0;
+    int bufLinha=1,estado=NORMAL,i=0;
     cin.getline(arquivo,MAXTARQ-1);
     arq=fopen(arquivo,"r");
     if(!arq){
@@ -83,32 +82,37 @@ int main()
         fread(&um,sizeof(char),1,arq);
         colunaAtual++;
         if(estado==LINECOMMENT){
-            if(verificarToken(&um,1)==ENDLINECOMMENT);
+            cout << " 1.";
+            buf[--bufLinha]=um;
+            if(verificarToken(&buf[bufLinha],1)==ENDLINECOMMENT);
                 estado=NORMAL;
+            bufLinha++;
         }
         else if(estado==BLOCKCOMMENT){
+            cout << " 2.";
             buf[--bufLinha]=um;
-            bufLinha++;
-            if(verificarToken(&buf[bufLinha-1],bufLinha)==ENDBLOCKCOMMENT)
+            if(verificarToken(&buf[bufLinha],2)==ENDBLOCKCOMMENT)
                 estado=NORMAL;
+            bufLinha++;
         }
         else{
             if(um==' '||um==';'){
-                if(um==' '){
+                /*if(um==' '){
                     buf[bufLinha]=um;
                     bufLinha++;
-                };
-                estado=tratarBuffer(buf,bufLinha,estado,lista);
+                };*/
+                cout << " 3.";
+                estado=tratarBuffer(buf,bufLinha,estado);
                 cout <<"\nstate: "<< estado<<" ...\n";
                 delete[] buf;
                 buf=new char[MAXTA];
-                bufLinha=0;
+                bufLinha=1;
             }
             else{
+                cout << " 4.";
                 buf[bufLinha]=um;
                 bufLinha++;
-                estado=verificarToken(buf,bufLinha);
-
+                estado=verificarToken(&buf[bufLinha],bufLinha);
             };
         }
 
@@ -125,7 +129,7 @@ int main()
     }while(feof(arq)==0);
     cout << "terminou"<<endl;
     */
-    //gravarTokens(lista,said);
+
     fclose(arq);
 
 	return 0;
@@ -216,21 +220,18 @@ int verificarToken(char *buf,int tamanho){
 
     return 11;
 }
-void gravarTokens(class Token *lista,char *buf,int estado){
+void gravarTokens(char *buf,int estado){
     ///objetivo nessa função é criar e gravar o token no arquivo de saida.
     int i=0;
     ofstream said;
-    if(Quantidade==1)
+    if(Quantidade==0)
         said.open("tokens.txt",ios::ate|ios::in|ios::trunc);
     else
         said.open("tokens.txt",ios::ate|ios::in);
     if(!said.is_open()){
         cout << "Nao sera possivel abrir o arquivo!2\n";
     };
-    class Token *aux=lista;
-    for(;aux->next!=NULL;){
-        aux=aux->next;
-    };
+    class Token *aux=new Token();
     aux->id=Quantidade;
     aux->name=new char;
     aux->name[0]=buf[0];
@@ -254,18 +255,17 @@ void gravarTokens(class Token *lista,char *buf,int estado){
             aux->tipo='E';
             break;
     }
-    linhaAnter=aux->linha=linhaAtual;
-    colunaAnter=aux->coluna=colunaAtual;
+    aux->linha=linhaAnter;
+    aux->coluna=colunaAnter;
 
     cout << aux->toString();
 
     said << aux->toString();
     said.close();
-
-    Quantidade++;
+    delete aux;
     cout << "qt: "<<Quantidade<<endl;
 }
-int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista){
+int tratarBuffer(char *buf,int tamanho,int estado){
     /**
     * se primeiro char é # ignora tudo até '\n'
     * se primeiro char é / e segundo char é / mesma coisa
@@ -286,41 +286,51 @@ int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista){
     */
     int i;
     cout << "tratarBuffer: "<<estado<<" \n";
-    for(i=0;i<tamanho;i++){
+    for(i=2;i<tamanho;i++){
+        colunaAnter++;
         if(estado==LINECOMMENT){
+            cout << " 1,";
             if(buf[i]=='\n'){
                 estado=ENDLINECOMMENT;
-                linhaAtual++;
-                colunaAtual=0;
+                linhaAnter++;
+                colunaAnter=0;
             };
         }
         else if(buf[i]=='#'){
+            cout << " 2,";
             estado=LINECOMMENT;
         }
         else{
+            cout << " 3,";
             if(estado!=BLOCKCOMMENT){
                 if(buf[i]=='/'){
                     if(buf[i+1]=='/'){
+                        cout << " 4,";
                         estado=LINECOMMENT;
                     }
                     else if(buf[i+1]=='*'){
+                        cout << " 5,";
                         estado=BLOCKCOMMENT;
                     }
                     else{
+                        cout << " 6,";
                         estado=verificarToken(&buf[i],tamanho-i);
-                        gravarTokens(lista,&buf[i],estado);
+                        gravarTokens(&buf[i],estado);
                     };
                 }
                 else{
+                    cout << " 7,";
                     ///aqui cai todos as outras possibilidades.
                     estado = verificarToken(&buf[i],tamanho-i);
-                    gravarTokens(lista,&buf[i],estado);
+                    gravarTokens(&buf[i],estado);
                 };
             }
             else{
+                cout << " 8,";
                 verificarToken(&buf[i],tamanho-i);
                 if(buf[i]=='*'){
                     if(buf[i+1]=='/'){
+                        cout << " 9,";
                         estado=ENDBLOCKCOMMENT;
                     }
                 }
