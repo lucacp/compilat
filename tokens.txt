@@ -1,0 +1,25 @@
+id: 1, Token: s, tipo: C, Linha: 1, Coluna: 28
+id: 2, Token: t, tipo: C, Linha: 1, Coluna: 28
+id: 3, Token: d, tipo: C, Linha: 1, Coluna: 28
+id: 4, Token: i, tipo: C, Linha: 1, Coluna: 28
+id: 5, Token: o, tipo: C, Linha: 1, Coluna: 28
+id: 6, Token: ., tipo: O, Linha: 1, Coluna: 28
+id: 7, Token: h, tipo: C, Linha: 1, Coluna: 28
+id: 8, Token: >, tipo: O, Linha: 1, Coluna: 28
+id: 9, Token: 
+, tipo: E, Linha: 2, Coluna: 0
+id: 10, Token: s, tipo: C, Linha: 2, Coluna: 12
+id: 11, Token: t, tipo: C, Linha: 2, Coluna: 12
+id: 12, Token: d, tipo: C, Linha: 2, Coluna: 12
+id: 13, Token: l, tipo: C, Linha: 2, Coluna: 12
+id: 14, Token: i, tipo: C, Linha: 2, Coluna: 12
+id: 15, Token: b, tipo: C, Linha: 2, Coluna: 12
+id: 16, Token: ., tipo: O, Linha: 2, Coluna: 12
+id: 17, Token: h, tipo: C, Linha: 2, Coluna: 12
+id: 18, Token: >, tipo: O, Linha: 2, Coluna: 12
+id: 19, Token: 
+, tipo: E, Linha: 3, Coluna: 0
+id: 20, Token:  , tipo: N, Linha: 3, Coluna: 0
+id: 21, Token:  , tipo: N, Linha: 3, Coluna: 1
+id: 22, Token:  , tipo: N, Linha: 3, Coluna: 2
+id: 23, Token:  , tipo: N, Linha: 3, Coluna: 3

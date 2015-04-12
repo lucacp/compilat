@@ -7,8 +7,8 @@
 #include <string>
 #define MAXTARQ 20
 #define MAXTA 50
-#define LINECOMMENT 0
-#define BLOCKCOMMENT 1
+#define LINECOMMENT 10
+#define BLOCKCOMMENT 9
 #define ENDLINECOMMENT 20
 #define ENDBLOCKCOMMENT 19
 #define STARTENDSTR 9
@@ -35,6 +35,7 @@ class Token{
     public:
         int id;
         char *name;
+        char tipo;
         int linha;
         int coluna;
         class Token *next;
@@ -46,7 +47,7 @@ class Token{
             string id1 = to_string(id);
             string linha1 = to_string(linha);
             string coluna1 = to_string(coluna);
-            return "id: "+id1+", Token: "+name[0]+", Linha: "+linha1+", Coluna: "+coluna1+"\n";
+            return "id: "+id1+", Token: "+name[0]+", tipo: "+tipo+", Linha: "+linha1+", Coluna: "+coluna1+"\n";
         };
 };
 
@@ -86,7 +87,7 @@ int main()
                 estado=NORMAL;
         }
         else if(estado==BLOCKCOMMENT){
-            buf[bufLinha]=um;
+            buf[--bufLinha]=um;
             bufLinha++;
             if(verificarToken(&buf[bufLinha-1],bufLinha)==ENDBLOCKCOMMENT)
                 estado=NORMAL;
@@ -97,9 +98,8 @@ int main()
                     buf[bufLinha]=um;
                     bufLinha++;
                 };
-                cout <<buf<<"...\n";
                 estado=tratarBuffer(buf,bufLinha,estado,lista);
-                cout <<"\n:"<< estado<<" ...\n";
+                cout <<"\nstate: "<< estado<<" ...\n";
                 delete[] buf;
                 buf=new char[MAXTA];
                 bufLinha=0;
@@ -219,7 +219,11 @@ int verificarToken(char *buf,int tamanho){
 void gravarTokens(class Token *lista,char *buf,int estado){
     ///objetivo nessa função é criar e gravar o token no arquivo de saida.
     int i=0;
-    ofstream said ("tokens.txt");
+    ofstream said;
+    if(Quantidade==1)
+        said.open("tokens.txt",ios::ate|ios::in|ios::trunc);
+    else
+        said.open("tokens.txt",ios::ate|ios::in);
     if(!said.is_open()){
         cout << "Nao sera possivel abrir o arquivo!2\n";
     };
@@ -230,6 +234,26 @@ void gravarTokens(class Token *lista,char *buf,int estado){
     aux->id=Quantidade;
     aux->name=new char;
     aux->name[0]=buf[0];
+    switch (estado){
+        case NORMAL:
+            aux->tipo='N';
+            break;
+        case CARACTER:
+            aux->tipo='C';
+            break;
+        case NUM:
+            aux->tipo='I';
+            break;
+        case OPERADOR:
+            aux->tipo='O';
+            break;
+        case STARTENDSTR:
+            aux->tipo='S';
+            break;
+        default:
+            aux->tipo='E';
+            break;
+    }
     linhaAnter=aux->linha=linhaAtual;
     colunaAnter=aux->coluna=colunaAtual;
 
@@ -273,7 +297,7 @@ int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista){
         else if(buf[i]=='#'){
             estado=LINECOMMENT;
         }
-        else if(i+1<tamanho){
+        else{
             if(estado!=BLOCKCOMMENT){
                 if(buf[i]=='/'){
                     if(buf[i+1]=='/'){
