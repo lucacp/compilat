@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <malloc.h>
+#include <string>
 #define MAXTARQ 20
 #define MAXTA 50
 #define LINECOMMENT 0
@@ -31,7 +32,17 @@ class Token{
 
     Token(){
         next=NULL;
+        Quantidade++;
     }
+    string toString(){
+        string id1;
+        sprintf(id1,"%d",id);
+        string linha1;
+        sprintf(linha1,"%d",linha);
+        string coluna1;
+        sprintf(coluna1,"%d",coluna);
+        return "id: "+id1+", Token: "+name+", Linha: "+linha1+", Coluna: "+coluna1;
+    };
 };
 
 
@@ -43,14 +54,13 @@ int colunaAnter=0;
 
 int verificarToken(char *buf,int tamanho);
 
-void gravarTokens(class Token *lista,FILE *arq);
+void gravarTokens(class Token *lista,char *buf,int estado);
 
-int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista);
+int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista,FILE *said);
 
 int main()
 { /*  txt com alterações  */
     FILE *arq=NULL;
-    FILE *said=NULL;
     Token *lista=new Token();
     cout << "Digite nome do arquivo para leitura: "<< endl;
     char arquivo[MAXTARQ];
@@ -61,10 +71,6 @@ int main()
     if(!arq){
         cout << "Nao foi possivel abrir o arquivo!";
         return 0;
-    };
-    said=fopen("tokens.txt","w");
-    if(!said){
-        cout << "Nao sera possivel gravar o arquivo!\n";
     };
     linhaAtual=1;
     while(feof(arq)==0){
@@ -196,8 +202,29 @@ int verificarToken(char *buf,int tamanho){
 
     return 11;
 }
-void gravarTokens(class Token *lista,FILE *arq){
-    ///objetivo nessa função é gravar o token que foi criado no tratarBuffer.
+void gravarTokens(class Token *lista,char *buf,int estado){
+    ///objetivo nessa função é criar e gravar o token no arquivo de saida.
+    int i=0;
+    FILE *said=NULL;
+    said=fopen("tokens.txt","r+");
+    if(!said){
+        cout << "Nao sera possivel abrir o arquivo!\n";
+        said=fopen("tokens.txt","w");
+        if(!said){
+            cout << "nao sera possivel gravar o arquivo!\n";
+        };
+    };
+    class Token *aux=lista;
+    for(i=0;i<Quantidade;i++){
+        aux->id=i+1;
+        aux.name=new char;
+        aux->name=buf[0];
+        linhaAnter=aux->linha=linhaAtual;
+        colunaAnter=aux->coluna=colunaAtual;
+        aux=aux->next;
+    };
+    cout << lista.toString();
+
 }
 int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista){
     /**
@@ -240,14 +267,15 @@ int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista){
                         estado=BLOCKCOMMENT;
                     }
                     else{
-                        ///aqui cai quando é: / e mais alguma coisa.
                         estado=verificarToken(&buf[i],tamanho-i);
-                    }
+                        gravarTokens(lista,&buf[i],estado);
+                    };
                 }
                 else{
                     ///aqui cai todos as outras possibilidades.
                     estado = verificarToken(&buf[i],tamanho-i);
-                }
+                    gravarTokens(lista,&buf[i],estado);
+                };
             }
             else{
                 if(buf[i]=='*'){
