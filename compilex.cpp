@@ -46,7 +46,7 @@ class Token{
             string id1 = to_string(id);
             string linha1 = to_string(linha);
             string coluna1 = to_string(coluna);
-            return "id: "+id1+", Token: "+name+", Linha: "+linha1+", Coluna: "+coluna1+"\n";
+            return "id: "+id1+", Token: "+name[0]+", Linha: "+linha1+", Coluna: "+coluna1+"\n";
         };
 };
 
@@ -68,7 +68,8 @@ int main()
     Token *lista=new Token();
     cout << "Digite nome do arquivo para leitura: "<< endl;
     char arquivo[MAXTARQ];
-    char um,buf[MAXTA];
+    char um,*buf;
+    buf=new char[MAXTA];
     int bufLinha=0,estado=NORMAL,i=0;
     cin.getline(arquivo,MAXTARQ-1);
     arq=fopen(arquivo,"r");
@@ -82,17 +83,16 @@ int main()
         colunaAtual++;
         if(estado==LINECOMMENT&&um!='\n')
             continue;
-        else if(estado==BLOCKCOMMENT&&(um!='/'&&um!='*'))
+        else if(estado==BLOCKCOMMENT&&(um!='/'||um!='*'))
             continue;
         else{
-            if(um==' '||um==';'||um=='\t'||um=='\n'){
-                if(um=='\n'){
-                    buf[bufLinha]=um;
-                    ++bufLinha;
-                };
+            if(um==' '){
+                buf[bufLinha]=um;
+                bufLinha++;
                 estado=tratarBuffer(buf,bufLinha,estado,lista);
+                cout <<"\n:"<< estado<<" ...\n";
                 for(i=0;i<bufLinha;i++){
-                    buf[i]=' ';
+                    buf[i]='\0';
                 }
                 bufLinha=0;
             }
@@ -209,27 +209,27 @@ int verificarToken(char *buf,int tamanho){
 void gravarTokens(class Token *lista,char *buf,int estado){
     ///objetivo nessa função é criar e gravar o token no arquivo de saida.
     int i=0;
-    FILE *said=NULL;
-    said=fopen("tokens.txt","r+");
-    if(!said){
-        cout << "Nao sera possivel abrir o arquivo!\n";
-        said=fopen("tokens.txt","w");
-        if(!said){
-            cout << "nao sera possivel gravar o arquivo!\n";
-        };
+    ofstream said ("tokens.txt");
+    if(!said.is_open()){
+        cout << "Nao sera possivel abrir o arquivo!2\n";
     };
     class Token *aux=lista;
-    for(i=0;i<Quantidade;i++){
-        aux->id=i+1;
-        aux->name=new char;
-        aux->name[0]=buf[0];
-        linhaAnter=aux->linha=linhaAtual;
-        colunaAnter=aux->coluna=colunaAtual;
+    for(i=1;i<Quantidade;i++){
         aux=aux->next;
     };
-    cout << lista->toString();
-    fclose(said);
+    aux->id=Quantidade;
+    aux->name=new char;
+    aux->name[0]=buf[0];
+    linhaAnter=aux->linha=linhaAtual;
+    colunaAnter=aux->coluna=colunaAtual;
 
+    cout << aux->toString();
+
+    said << aux->toString();
+    said.close();
+
+    Quantidade++;
+    cout << "qt: "<<Quantidade<<endl;
 }
 int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista){
     /**
@@ -251,6 +251,7 @@ int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista){
     *
     */
     int i;
+    cout << "tratarBuffer: "<<estado<<" \n";
     for(i=0;i<tamanho;i++){
         if(estado==LINECOMMENT){
             if(buf[i]=='\n'){
@@ -283,6 +284,7 @@ int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista){
                 };
             }
             else{
+                verificarToken(&buf[i],tamanho-i);
                 if(buf[i]=='*'){
                     if(buf[i+1]=='/'){
                         estado=ENDBLOCKCOMMENT;

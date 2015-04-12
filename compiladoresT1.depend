@@ -1,5 +1,10 @@
 # depslib dependency file v1.0
-1428360282 source:/home/ice1life/workspace/compiladoresT1/compilex.cpp
+1428847090 source:/home/ice1life/workspace/compiladoresT1/compilex.cpp
+	<sstream>
 	<iostream>
 	<fstream>
+	<stdio.h>
+	<stdlib.h>
+	<malloc.h>
+	<string>
 
