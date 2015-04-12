@@ -1,8 +1,8 @@
+#include <sstream>
 #include <iostream>
 #include <fstream>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
+#include <stdio.h>
+#include <stdlib.h>
 #include <malloc.h>
 #include <string>
 #define MAXTARQ 20
@@ -20,33 +20,37 @@
 #define TRUE 258
 #define FALSE 259
 
+std::string to_string(int value)
+{
+	std::ostringstream os;
+	os << value;
+	return os.str();
+}
 
 using namespace std;
 
-class Token{
-    int id;
-    char *name;
-    int linha;
-    int coluna;
-    class Token *next;
+int Quantidade=0;
 
-    Token(){
-        next=NULL;
-        Quantidade++;
-    }
-    string toString(){
-        string id1;
-        sprintf(id1,"%d",id);
-        string linha1;
-        sprintf(linha1,"%d",linha);
-        string coluna1;
-        sprintf(coluna1,"%d",coluna);
-        return "id: "+id1+", Token: "+name+", Linha: "+linha1+", Coluna: "+coluna1;
-    };
+class Token{
+    public:
+        int id;
+        char *name;
+        int linha;
+        int coluna;
+        class Token *next;
+        Token(){
+            next=NULL;
+            Quantidade++;
+        }
+        string toString(){
+            string id1 = to_string(id);
+            string linha1 = to_string(linha);
+            string coluna1 = to_string(coluna);
+            return "id: "+id1+", Token: "+name+", Linha: "+linha1+", Coluna: "+coluna1+"\n";
+        };
 };
 
 
-int Quantidade=0;
 int linhaAtual=0;
 int colunaAtual=0;
 int linhaAnter=0;
@@ -56,7 +60,7 @@ int verificarToken(char *buf,int tamanho);
 
 void gravarTokens(class Token *lista,char *buf,int estado);
 
-int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista,FILE *said);
+int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista);
 
 int main()
 { /*  txt com alterações  */
@@ -113,7 +117,7 @@ int main()
     */
     //gravarTokens(lista,said);
     fclose(arq);
-	fclose(said);
+
 	return 0;
 }
 
@@ -217,13 +221,14 @@ void gravarTokens(class Token *lista,char *buf,int estado){
     class Token *aux=lista;
     for(i=0;i<Quantidade;i++){
         aux->id=i+1;
-        aux.name=new char;
-        aux->name=buf[0];
+        aux->name=new char;
+        aux->name[0]=buf[0];
         linhaAnter=aux->linha=linhaAtual;
         colunaAnter=aux->coluna=colunaAtual;
         aux=aux->next;
     };
-    cout << lista.toString();
+    cout << lista->toString();
+    fclose(said);
 
 }
 int tratarBuffer(char *buf,int tamanho,int estado,class Token *lista){
