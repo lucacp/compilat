@@ -81,24 +81,34 @@ int main()
     while(feof(arq)==0){
         fread(&um,sizeof(char),1,arq);
         colunaAtual++;
-        if(estado==LINECOMMENT&&um!='\n')
-            continue;
-        else if(estado==BLOCKCOMMENT&&(um!='/'||um!='*'))
-            continue;
+        if(estado==LINECOMMENT){
+            if(verificarToken(&um,1)==ENDLINECOMMENT);
+                estado=NORMAL;
+        }
+        else if(estado==BLOCKCOMMENT){
+            buf[bufLinha]=um;
+            bufLinha++;
+            if(verificarToken(&buf[bufLinha-1],bufLinha)==ENDBLOCKCOMMENT)
+                estado=NORMAL;
+        }
         else{
-            if(um==' '){
-                buf[bufLinha]=um;
-                bufLinha++;
+            if(um==' '||um==';'){
+                if(um==' '){
+                    buf[bufLinha]=um;
+                    bufLinha++;
+                };
+                cout <<buf<<"...\n";
                 estado=tratarBuffer(buf,bufLinha,estado,lista);
                 cout <<"\n:"<< estado<<" ...\n";
-                for(i=0;i<bufLinha;i++){
-                    buf[i]='\0';
-                }
+                delete[] buf;
+                buf=new char[MAXTA];
                 bufLinha=0;
             }
             else{
                 buf[bufLinha]=um;
                 bufLinha++;
+                estado=verificarToken(buf,bufLinha);
+
             };
         }
 
@@ -214,7 +224,7 @@ void gravarTokens(class Token *lista,char *buf,int estado){
         cout << "Nao sera possivel abrir o arquivo!2\n";
     };
     class Token *aux=lista;
-    for(i=1;i<Quantidade;i++){
+    for(;aux->next!=NULL;){
         aux=aux->next;
     };
     aux->id=Quantidade;
