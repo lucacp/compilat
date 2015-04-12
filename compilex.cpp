@@ -6,13 +6,14 @@
 #include <malloc.h>
 #include <string>
 #define MAXTARQ 20
-#define MAXTA 20
+#define MAXTA 30
 #define LINECOMMENT 10
 #define BLOCKCOMMENT 9
 #define ENDLINECOMMENT 20
 #define ENDBLOCKCOMMENT 19
 #define STARTENDSTR 9
 #define NORMAL 11
+#define VAZIO 13
 #define CARACTER 8
 #define OPERADOR 2
 #define NUM 256
@@ -61,7 +62,13 @@ int verificarToken(char *buf,int tamanho);
 
 void gravarTokens(char *buf,int estado);
 
+void gravarTokensTam(char *buf,int estado,int tamanho);
+
 int tratarBuffer(char *buf,int tamanho,int estado);
+
+void identificarNumeros(char *buf,int tamanho);
+
+void identificadorString(char *buf,int tamanho);
 
 int main()
 { /*  txt com alterações  */
@@ -89,7 +96,6 @@ int main()
             bufLinha++;
         }
         else if(estado==BLOCKCOMMENT){
-            cout << " 2.";
             buf[--bufLinha]=um;
             if(verificarToken(&buf[bufLinha],2)==ENDBLOCKCOMMENT)
                 estado=NORMAL;
@@ -137,8 +143,11 @@ int main()
 
 int verificarToken(char *buf,int tamanho){
     char um=buf[0];
+    if(tamanho<=0)
+        return VAZIO;
     switch (um){
         case '#':
+            cout << " ...;... ";
             return LINECOMMENT;
             break;
         case '\n':
@@ -322,7 +331,23 @@ int tratarBuffer(char *buf,int tamanho,int estado){
                     cout << " 7,";
                     ///aqui cai todos as outras possibilidades.
                     estado = verificarToken(&buf[i],tamanho-i);
-                    gravarTokens(&buf[i],estado);
+                    switch (estado){
+                        case NUM:
+                            identificarNumeros(&buf[i],tamanho-i);
+                            break;
+                        case STARTENDSTR:
+                            identificadorString(&buf[i],tamanho-i);
+                        case OPERADOR:
+                            if(verificarToken(&buf[i+1],tamanho-i-1)==OPERADOR)
+                                gravarTokensTam(&buf[i],estado,2);
+                            else
+                                gravarTokens(&buf[i],estado);
+                            break;
+                        default:
+                            gravarTokens(&buf[i],NORMAL);
+                            break;
+                    }
+
                 };
             }
             else{
@@ -338,4 +363,68 @@ int tratarBuffer(char *buf,int tamanho,int estado){
         }
     }
     return estado;
+}
+void identificarNumeros(char *buf,int tamanho){
+    int i,stat1=0,stat2=NUM;
+    for(i=1;i<tamanho;i++){
+        stat1=verificarToken(&buf[i],tamanho);
+        if(stat1!=NUM){
+            break;
+        }
+    };
+    gravarTokensTam(buf,stat2,i);
+}
+void identificadorString(char *buf,int tamanho){
+    int i,stat1=0,stat2=CARACTER;
+    for(i=1;i<tamanho;i++){
+        stat1=verificarToken(&buf[i],tamanho);
+        if(stat1!=stat2){
+            break;
+        }
+    };
+    gravarTokensTam(buf,stat2,i);
+};
+void gravarTokensTam(char *buf,int estado,int tamanho){
+    ///objetivo nessa função é criar e gravar o token no arquivo de saida.
+    int i=0;
+    ofstream said;
+    if(Quantidade==0)
+        said.open("tokens.txt",ios::ate|ios::in|ios::trunc);
+    else
+        said.open("tokens.txt",ios::ate|ios::in);
+    if(!said.is_open()){
+        cout << "Nao sera possivel abrir o arquivo!2\n";
+    };
+    class Token *aux=new Token();
+    aux->id=Quantidade;
+    aux->name=new char[tamanho];
+    for(i=0;i<tamanho;i++){
+        aux->name[i]=buf[i];
+    }
+    switch (estado){
+        case CARACTER:
+            aux->tipo='C';
+            break;
+        case NUM:
+            aux->tipo='I';
+            break;
+        case OPERADOR:
+            aux->tipo='O';
+            break;
+        case STARTENDSTR:
+            aux->tipo='S';
+            break;
+        default:
+            aux->tipo='E';
+            break;
+    }
+    aux->linha=linhaAnter;
+    aux->coluna=colunaAnter;
+
+    cout << aux->toString();
+
+    said << aux->toString();
+    said.close();
+    delete aux;
+    cout << "qt: "<<Quantidade<<endl;
 }

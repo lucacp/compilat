@@ -1,102 +1,149 @@
-id: 1, Token: i, tipo: C, Linha: 1, Coluna: 1
-id: 2, Token: n, tipo: C, Linha: 1, Coluna: 2
-id: 3, Token: c, tipo: C, Linha: 1, Coluna: 3
-id: 4, Token: l, tipo: C, Linha: 1, Coluna: 4
-id: 5, Token: u, tipo: C, Linha: 1, Coluna: 5
-id: 6, Token: d, tipo: C, Linha: 1, Coluna: 6
-id: 7, Token: e, tipo: C, Linha: 1, Coluna: 7
-id: 8, Token: s, tipo: C, Linha: 1, Coluna: 8
-id: 9, Token: t, tipo: C, Linha: 1, Coluna: 9
-id: 10, Token: d, tipo: C, Linha: 1, Coluna: 10
-id: 11, Token: i, tipo: C, Linha: 1, Coluna: 11
-id: 12, Token: o, tipo: C, Linha: 1, Coluna: 12
+id: 1, Token: i, tipo: N, Linha: 1, Coluna: 1
+id: 2, Token: n, tipo: N, Linha: 1, Coluna: 2
+id: 3, Token: c, tipo: N, Linha: 1, Coluna: 3
+id: 4, Token: l, tipo: N, Linha: 1, Coluna: 4
+id: 5, Token: u, tipo: N, Linha: 1, Coluna: 5
+id: 6, Token: d, tipo: N, Linha: 1, Coluna: 6
+id: 7, Token: e, tipo: N, Linha: 1, Coluna: 7
+id: 8, Token: s, tipo: N, Linha: 1, Coluna: 8
+id: 9, Token: t, tipo: N, Linha: 1, Coluna: 9
+id: 10, Token: d, tipo: N, Linha: 1, Coluna: 10
+id: 11, Token: i, tipo: N, Linha: 1, Coluna: 11
+id: 12, Token: o, tipo: N, Linha: 1, Coluna: 12
 id: 13, Token: ., tipo: O, Linha: 1, Coluna: 13
-id: 14, Token: h, tipo: C, Linha: 1, Coluna: 14
+id: 14, Token: h, tipo: N, Linha: 1, Coluna: 14
 id: 15, Token: >, tipo: O, Linha: 1, Coluna: 15
 id: 16, Token: 
-, tipo: E, Linha: 1, Coluna: 16
-id: 17, Token: t, tipo: C, Linha: 1, Coluna: 25
-id: 18, Token: d, tipo: C, Linha: 1, Coluna: 26
-id: 19, Token: l, tipo: C, Linha: 1, Coluna: 27
-id: 20, Token: i, tipo: C, Linha: 1, Coluna: 28
-id: 21, Token: b, tipo: C, Linha: 1, Coluna: 29
+, tipo: N, Linha: 1, Coluna: 16
+id: 17, Token: t, tipo: N, Linha: 1, Coluna: 25
+id: 18, Token: d, tipo: N, Linha: 1, Coluna: 26
+id: 19, Token: l, tipo: N, Linha: 1, Coluna: 27
+id: 20, Token: i, tipo: N, Linha: 1, Coluna: 28
+id: 21, Token: b, tipo: N, Linha: 1, Coluna: 29
 id: 22, Token: ., tipo: O, Linha: 1, Coluna: 30
-id: 23, Token: h, tipo: C, Linha: 1, Coluna: 31
+id: 23, Token: h, tipo: N, Linha: 1, Coluna: 31
 id: 24, Token: >, tipo: O, Linha: 1, Coluna: 32
-id: 25, Token:  , tipo: N, Linha: 1, Coluna: 33
-id: 26, Token: *, tipo: O, Linha: 1, Coluna: 34
-id: 27, Token: *, tipo: O, Linha: 1, Coluna: 35
-id: 28, Token: A, tipo: C, Linha: 1, Coluna: 36
-id: 29, Token: r, tipo: C, Linha: 1, Coluna: 37
-id: 30, Token: q, tipo: C, Linha: 1, Coluna: 38
-id: 31, Token: u, tipo: C, Linha: 1, Coluna: 39
-id: 32, Token: i, tipo: C, Linha: 1, Coluna: 40
-id: 33, Token: v, tipo: C, Linha: 1, Coluna: 41
-id: 34, Token:  , tipo: N, Linha: 1, Coluna: 42
-id: 35, Token: F, tipo: C, Linha: 1, Coluna: 43
-id: 36, Token: o, tipo: C, Linha: 1, Coluna: 44
-id: 37, Token: n, tipo: C, Linha: 1, Coluna: 45
-id: 38, Token: t, tipo: C, Linha: 1, Coluna: 46
-id: 39, Token: e, tipo: C, Linha: 1, Coluna: 47
-id: 40, Token: u, tipo: C, Linha: 1, Coluna: 48
-id: 41, Token: e, tipo: C, Linha: 1, Coluna: 49
-id: 42, Token: e, tipo: C, Linha: 1, Coluna: 50
-id: 43, Token: r, tipo: C, Linha: 1, Coluna: 51
-id: 44, Token: a, tipo: C, Linha: 1, Coluna: 52
-id: 45, Token: a, tipo: C, Linha: 1, Coluna: 53
-id: 46, Token: b, tipo: C, Linha: 1, Coluna: 54
-id: 47, Token: e, tipo: C, Linha: 1, Coluna: 55
-id: 48, Token: l, tipo: C, Linha: 1, Coluna: 56
-id: 49, Token: a, tipo: C, Linha: 1, Coluna: 57
-id: 50, Token: e, tipo: C, Linha: 1, Coluna: 58
-id: 51, Token: o, tipo: C, Linha: 1, Coluna: 59
-id: 52, Token: k, tipo: C, Linha: 1, Coluna: 60
-id: 53, Token: e, tipo: C, Linha: 1, Coluna: 61
-id: 54, Token: n, tipo: C, Linha: 1, Coluna: 62
-id: 55, Token: s, tipo: C, Linha: 1, Coluna: 63
-id: 56, Token: 
-, tipo: E, Linha: 1, Coluna: 64
-id: 57, Token: 
-, tipo: E, Linha: 1, Coluna: 65
-id: 58, Token: 
-, tipo: E, Linha: 1, Coluna: 66
-id: 59, Token: 
-, tipo: E, Linha: 1, Coluna: 67
-id: 60, Token: r, tipo: C, Linha: 1, Coluna: 68
-id: 61, Token: m, tipo: C, Linha: 1, Coluna: 69
-id: 62, Token: a, tipo: C, Linha: 1, Coluna: 70
-id: 63, Token: z, tipo: C, Linha: 1, Coluna: 71
-id: 64, Token: e, tipo: C, Linha: 1, Coluna: 72
-id: 65, Token: n, tipo: C, Linha: 1, Coluna: 73
-id: 66, Token: a, tipo: C, Linha: 1, Coluna: 74
-id: 67, Token: r, tipo: C, Linha: 1, Coluna: 75
-id: 68, Token: l, tipo: C, Linha: 1, Coluna: 76
-id: 69, Token: t, tipo: C, Linha: 1, Coluna: 77
-id: 70, Token: i, tipo: C, Linha: 1, Coluna: 78
-id: 71, Token: m, tipo: C, Linha: 1, Coluna: 79
-id: 72, Token: o, tipo: C, Linha: 1, Coluna: 80
-id: 73, Token: s, tipo: C, Linha: 1, Coluna: 81
-id: 74, Token: t, tipo: C, Linha: 1, Coluna: 82
-id: 75, Token: a, tipo: C, Linha: 1, Coluna: 83
-id: 76, Token: d, tipo: C, Linha: 1, Coluna: 84
-id: 77, Token: o, tipo: C, Linha: 1, Coluna: 85
-id: 78, Token: a, tipo: C, Linha: 1, Coluna: 86
-id: 79, Token: l, tipo: C, Linha: 1, Coluna: 87
-id: 80, Token: i, tipo: C, Linha: 1, Coluna: 88
-id: 81, Token: d, tipo: C, Linha: 1, Coluna: 89
-id: 82, Token: o, tipo: C, Linha: 1, Coluna: 90
-id: 83, Token: 
-, tipo: E, Linha: 1, Coluna: 91
-id: 84, Token: 
-, tipo: E, Linha: 1, Coluna: 92
-id: 85, Token: 
-, tipo: E, Linha: 1, Coluna: 93
-id: 86, Token: 
-, tipo: E, Linha: 1, Coluna: 94
-id: 87, Token: *, tipo: E, Linha: 1, Coluna: 95
-id: 88, Token: /, tipo: O, Linha: 1, Coluna: 96
-id: 89, Token: 
-, tipo: E, Linha: 1, Coluna: 97
-id: 90, Token: n, tipo: C, Linha: 1, Coluna: 98
-id: 91, Token: t, tipo: C, Linha: 1, Coluna: 99
-id: 92, Token: /, tipo: O, Linha: 1, Coluna: 100
+id: 25, Token: 
+, tipo: N, Linha: 1, Coluna: 33
+id: 26, Token: i, tipo: N, Linha: 1, Coluna: 34
+id: 27, Token: n, tipo: N, Linha: 1, Coluna: 35
+id: 28, Token: t, tipo: N, Linha: 1, Coluna: 36
+id: 29, Token: a, tipo: N, Linha: 1, Coluna: 37
+id: 30, Token: i, tipo: N, Linha: 1, Coluna: 38
+id: 31, Token: n, tipo: N, Linha: 1, Coluna: 39
+id: 32, Token: (, tipo: O, Linha: 1, Coluna: 40
+id: 33, Token: ), tipo: O, Linha: 1, Coluna: 41
+id: 34, Token: 
+, tipo: N, Linha: 1, Coluna: 42
+id: 35, Token: {, tipo: O, Linha: 1, Coluna: 43
+id: 36, Token: 
+, tipo: N, Linha: 1, Coluna: 44
+id: 37, Token: *, tipo: O, Linha: 1, Coluna: 45
+id: 38, Token: *, tipo: O, Linha: 1, Coluna: 46
+id: 39, Token: A, tipo: N, Linha: 1, Coluna: 47
+id: 40, Token: r, tipo: N, Linha: 1, Coluna: 48
+id: 41, Token: q, tipo: N, Linha: 1, Coluna: 49
+id: 42, Token: u, tipo: N, Linha: 1, Coluna: 50
+id: 43, Token: i, tipo: N, Linha: 1, Coluna: 51
+id: 44, Token: v, tipo: N, Linha: 1, Coluna: 52
+id: 45, Token: o, tipo: N, Linha: 1, Coluna: 53
+id: 46, Token: o, tipo: N, Linha: 1, Coluna: 54
+id: 47, Token: n, tipo: N, Linha: 1, Coluna: 55
+id: 48, Token: t, tipo: N, Linha: 1, Coluna: 56
+id: 49, Token: e, tipo: N, Linha: 1, Coluna: 57
+id: 50, Token: u, tipo: N, Linha: 1, Coluna: 58
+id: 51, Token: e, tipo: N, Linha: 1, Coluna: 59
+id: 52, Token: e, tipo: N, Linha: 1, Coluna: 60
+id: 53, Token: r, tipo: N, Linha: 1, Coluna: 61
+id: 54, Token: a, tipo: N, Linha: 1, Coluna: 62
+id: 55, Token: a, tipo: N, Linha: 1, Coluna: 63
+id: 56, Token: b, tipo: N, Linha: 1, Coluna: 64
+id: 57, Token: e, tipo: N, Linha: 1, Coluna: 65
+id: 58, Token: l, tipo: N, Linha: 1, Coluna: 66
+id: 59, Token: a, tipo: N, Linha: 1, Coluna: 67
+id: 60, Token: e, tipo: N, Linha: 1, Coluna: 68
+id: 61, Token: o, tipo: N, Linha: 1, Coluna: 69
+id: 62, Token: k, tipo: N, Linha: 1, Coluna: 70
+id: 63, Token: e, tipo: N, Linha: 1, Coluna: 71
+id: 64, Token: n, tipo: N, Linha: 1, Coluna: 72
+id: 65, Token: s, tipo: N, Linha: 1, Coluna: 73
+id: 66, Token: 
+, tipo: N, Linha: 1, Coluna: 74
+id: 67, Token: 
+, tipo: N, Linha: 1, Coluna: 75
+id: 68, Token: 
+, tipo: N, Linha: 1, Coluna: 76
+id: 69, Token: 
+, tipo: N, Linha: 1, Coluna: 77
+id: 70, Token: r, tipo: N, Linha: 1, Coluna: 78
+id: 71, Token: m, tipo: N, Linha: 1, Coluna: 79
+id: 72, Token: a, tipo: N, Linha: 1, Coluna: 80
+id: 73, Token: z, tipo: N, Linha: 1, Coluna: 81
+id: 74, Token: e, tipo: N, Linha: 1, Coluna: 82
+id: 75, Token: n, tipo: N, Linha: 1, Coluna: 83
+id: 76, Token: a, tipo: N, Linha: 1, Coluna: 84
+id: 77, Token: r, tipo: N, Linha: 1, Coluna: 85
+id: 78, Token: l, tipo: N, Linha: 1, Coluna: 86
+id: 79, Token: t, tipo: N, Linha: 1, Coluna: 87
+id: 80, Token: i, tipo: N, Linha: 1, Coluna: 88
+id: 81, Token: m, tipo: N, Linha: 1, Coluna: 89
+id: 82, Token: o, tipo: N, Linha: 1, Coluna: 90
+id: 83, Token: s, tipo: N, Linha: 1, Coluna: 91
+id: 84, Token: t, tipo: N, Linha: 1, Coluna: 92
+id: 85, Token: a, tipo: N, Linha: 1, Coluna: 93
+id: 86, Token: d, tipo: N, Linha: 1, Coluna: 94
+id: 87, Token: o, tipo: N, Linha: 1, Coluna: 95
+id: 88, Token: a, tipo: N, Linha: 1, Coluna: 96
+id: 89, Token: l, tipo: N, Linha: 1, Coluna: 97
+id: 90, Token: i, tipo: N, Linha: 1, Coluna: 98
+id: 91, Token: d, tipo: N, Linha: 1, Coluna: 99
+id: 92, Token: o, tipo: N, Linha: 1, Coluna: 100
+id: 93, Token: 
+, tipo: N, Linha: 1, Coluna: 101
+id: 94, Token: 
+, tipo: N, Linha: 1, Coluna: 102
+id: 95, Token: 
+, tipo: N, Linha: 1, Coluna: 103
+id: 96, Token: 
+, tipo: N, Linha: 1, Coluna: 104
+id: 97, Token: *, tipo: N, Linha: 1, Coluna: 105
+id: 98, Token: /, tipo: O, Linha: 1, Coluna: 106
+id: 99, Token: 
+, tipo: N, Linha: 1, Coluna: 107
+id: 100, Token: n, tipo: N, Linha: 1, Coluna: 108
+id: 101, Token: t, tipo: N, Linha: 1, Coluna: 109
+id: 102, Token: o, tipo: N, Linha: 1, Coluna: 110
+id: 103, Token: {, tipo: O, Linha: 1, Coluna: 111
+id: 104, Token: 
+, tipo: N, Linha: 1, Coluna: 112
+id: 105, Token: f, tipo: N, Linha: 1, Coluna: 113
+id: 106, Token: (, tipo: O, Linha: 1, Coluna: 114
+id: 107, Token: i, tipo: N, Linha: 1, Coluna: 115
+id: 108, Token: -, tipo: O, Linha: 1, Coluna: 116
+id: 109, Token: 1, tipo: I, Linha: 1, Coluna: 117
+id: 110, Token: =, tipo: O, Linha: 1, Coluna: 118
+id: 111, Token: =, tipo: O, Linha: 1, Coluna: 119
+id: 112, Token: 1, tipo: I, Linha: 1, Coluna: 120
+id: 113, Token: 8, tipo: I, Linha: 1, Coluna: 121
+id: 114, Token: ), tipo: O, Linha: 1, Coluna: 122
+id: 115, Token: {, tipo: O, Linha: 1, Coluna: 123
+id: 116, Token: 
+, tipo: N, Linha: 1, Coluna: 124
+id: 117, Token: f, tipo: N, Linha: 1, Coluna: 125
+id: 118, Token: (, tipo: O, Linha: 1, Coluna: 126
+id: 119, Token: i, tipo: N, Linha: 1, Coluna: 127
+id: 120, Token: =, tipo: O, Linha: 1, Coluna: 128
+id: 121, Token: =, tipo: O, Linha: 1, Coluna: 129
+id: 122, Token: 1, tipo: I, Linha: 1, Coluna: 130
+id: 123, Token: 8, tipo: I, Linha: 1, Coluna: 131
+id: 124, Token: ), tipo: O, Linha: 1, Coluna: 132
+id: 125, Token: 
+, tipo: N, Linha: 1, Coluna: 133
+id: 126, Token: r, tipo: N, Linha: 1, Coluna: 134
+id: 127, Token: i, tipo: N, Linha: 1, Coluna: 135
+id: 128, Token: n, tipo: N, Linha: 1, Coluna: 136
+id: 129, Token: t, tipo: N, Linha: 1, Coluna: 137
+id: 130, Token: f, tipo: N, Linha: 1, Coluna: 138
+id: 131, Token: (, tipo: O, Linha: 1, Coluna: 139
+id: 132, Token: ", tipo: C, Linha: 1, Coluna: 140
+id: 133, Token: ", tipo: S, Linha: 1, Coluna: 140
